@@ -12,7 +12,7 @@ def predict_temperature(name, temperature, timestamp):
 
     channel.exchange_declare(exchange='predict', exchange_type='fanout')
 
-    loaded_model = pickle.load(open("model_regressor_"+name,"rb"))
+    loaded_model = pickle.load(open("model_regressor_"+name+".sav","rb"))
     y_pred = loaded_model.predict(timestamp+timedelta(hours=1))
     new_temperature = temperature
     if y_pred < temperature-0.5 :
