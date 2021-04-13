@@ -3,6 +3,7 @@ import sys
 import pika
 import json
 import mariadb 
+import emit_predict
 
 def main():
     # Connexion local, on peut le remplacer par une IP ou un nom si on veut une autre machine
@@ -42,6 +43,8 @@ def main():
         print(f"Last Inserted ID: {cur.lastrowid}")
             
         conn.close()
+        emit_predict.predict_temperature(data["sensor"], data["temperature"], data["timestamp"])
+
 
     # Définition de la queue, on enlève le auto_ack
     channel.basic_consume(queue=queue_name,
